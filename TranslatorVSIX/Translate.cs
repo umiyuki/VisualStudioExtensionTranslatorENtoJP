@@ -188,7 +188,7 @@ namespace TranslatorVSIX
                     string finalstr = "";
                     for (int i = 0; i < strs.Length; i++)
                     {
-                        finalstr += "\n//" + strs[i];
+                        finalstr += "\n// " + strs[i];
                     }
 
                     selection.Text += finalstr;
