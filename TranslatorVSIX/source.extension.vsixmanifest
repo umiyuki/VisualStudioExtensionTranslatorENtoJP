@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
     <Metadata>
-        <Identity Id="TranslatorVSIX.河野祥二.38111401-c0ce-4f4f-8110-3f70a6edcdfe" Version="1.0.1" Language="ja-JP" Publisher="umiyuki" />
+        <Identity Id="TranslatorVSIX.河野祥二.38111401-c0ce-4f4f-8110-3f70a6edcdfe" Version="1.1.0" Language="ja-JP" Publisher="umiyuki" />
         <DisplayName>TranslatorENtoJP</DisplayName>
         <Description xml:space="preserve">英語のコメントを日本語に翻訳して下に追記します。
 Translate English comments to Japanese comments.</Description>

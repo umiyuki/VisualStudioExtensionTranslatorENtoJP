@@ -3,12 +3,23 @@ using System.Collections.Generic;
 using System.Net;
 using System.Text;
 using System.Web;
+using System.Collections.Specialized;
 
 namespace VSTranslator.Translation
 {
 	internal static class Utils
 	{
-		public static string GetHttpResponse(String url, String data)
+        public static string GetHttpResponse(String url)
+        {
+            WebClient client = new WebClient();
+            client.Headers.Add("user-agent", "User-Agent: Mozilla/5.0");
+            client.Headers.Add("Content-Type", "application/x-www-form-urlencoded;charset=utf-8");
+            byte[] rawData = client.DownloadData(url);
+            //byte[] rawData = client.UploadData(url, Encoding.UTF8.GetBytes(data));
+            return Encoding.UTF8.GetString(rawData);
+        }
+
+        public static string GetHttpResponse(String url, String data)
 		{
 			WebClient client = new WebClient();
 			client.Headers.Add("user-agent", "User-Agent: Mozilla/5.0");

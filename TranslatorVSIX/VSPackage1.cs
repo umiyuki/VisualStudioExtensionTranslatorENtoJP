@@ -58,6 +58,15 @@ namespace TranslatorVSIX
             // initialization is the Initialize method.
         }
 
+        public string GASEndpoint
+        {
+            get
+            {
+                OptionDialog dialog = (OptionDialog)GetDialogPage(typeof(OptionDialog));
+                return dialog.GASEndpoint;
+            }
+        }
+
         public string ApiKey {
             get
             {

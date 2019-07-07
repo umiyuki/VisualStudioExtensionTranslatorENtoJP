@@ -146,6 +146,14 @@ namespace TranslatorVSIX
         /// This function is the callback used to execute the command when the menu item is clicked.
         /// See the constructor to see how the menu item is associated with this function using
         /// OleMenuCommandService service and MenuCommand class.
+        // この関数は、メニュー項目がクリックされたときにコマンドを実行するために使用される
+        // コールバックです。 OleMenuCommandServiceサービスとMenuCommandクラスを使用して、メニュー項目
+        // がこの関数にどのように関連付けられているかを確認するには、コンストラクターを参照
+        // してください。
+        // この関数は、メニュー項目がクリックされたときにコマンドを実行するために使用される
+        // コールバックです。 OleMenuCommandServiceサービスとMenuCommandクラスを使用して、メニュー項目
+        // がこの関数にどのように関連付けられているかを確認するには、コンストラクターを参照
+        // してください。
         /// </summary>
         /// <param name="sender">Event sender.</param>
         /// <param name="e">Event args.</param>
@@ -155,6 +163,7 @@ namespace TranslatorVSIX
             string title = "Translate";
 
             // Show a message box to prove we were here
+            // 私たちがここにいたことを証明するメッセージボックスを表示する
             /*
             VsShellUtilities.ShowMessageBox(
                 this.ServiceProvider,
@@ -188,10 +197,23 @@ namespace TranslatorVSIX
                     shell.LoadPackage(ref PackageToBeLoadedGuid, out package);
                     VSPackage1 vsPackage = (VSPackage1)package;
                     string apikey = vsPackage.ApiKey;
+                    string gasEndpoint = vsPackage.GASEndpoint;
                     string sourceLange = vsPackage.SourceLang;
                     string destinationLang = vsPackage.DestinationLang;
 
-                    if (string.IsNullOrEmpty(apikey))
+                    TranslationResult result = null;
+
+                    if (!string.IsNullOrEmpty(apikey))
+                    {
+                        GoogleTranslator translator = new GoogleTranslator();
+                        result = translator.GetTranslation(text, sourceLange, destinationLang, apikey);
+                    }
+                    else if (!string.IsNullOrEmpty(gasEndpoint))
+                    {
+                        GoogleTranslator translator = new GoogleTranslator();
+                        result = translator.GetTranslationFromGoogleAppScript(text, sourceLange, destinationLang, gasEndpoint);
+                    }
+                    else
                     {
                         VsShellUtilities.ShowMessageBox(
                         this.ServiceProvider,
@@ -202,9 +224,6 @@ namespace TranslatorVSIX
                         OLEMSGDEFBUTTON.OLEMSGDEFBUTTON_FIRST);
                         return;
                     }
-
-                    GoogleTranslator translator = new GoogleTranslator();
-                    var result = translator.GetTranslation(text, sourceLange, destinationLang, apikey);
 
                     //120バイトごとに改行
                     var strs = SubstringAtCount(result.Sentences[0], 120);

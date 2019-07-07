@@ -99,7 +99,6 @@ namespace VSTranslator.Translation
 				}
 			* */
 
-            //baseUrl += "?key=" + "AIzaSyBTTPDIKiZV - vcyeWvGH2oTYvuLJvhzNmc";
             baseUrl += "?key=" + apikey;
 
             string data = Utils.CreateQuerystring(new Dictionary<string, string>()
@@ -115,12 +114,23 @@ namespace VSTranslator.Translation
             });
 
             string response = Utils.GetHttpResponse(baseUrl, data);
-            //var json = JArray.Parse(response);
-            //TranslationResult res = ParseResponse(json);
-            //res.DestinationLanguage = destinationLang;
             Response resp = Newtonsoft.Json.JsonConvert.DeserializeObject<Response>(response);
             TranslationResult res = new TranslationResult();
             res.Sentences = new List<string>() { resp.data.translations[0].translatedText };
+            return res;
+        }
+
+        public TranslationResult GetTranslationFromGoogleAppScript(string text, string sourceLang, string destinationLang, string baseurl)
+        {
+            string baseUrl = baseurl;
+
+            baseUrl += "?text=" + System.Web.HttpUtility.UrlEncode(text);
+            baseUrl += "&source=" + sourceLang;
+            baseUrl += "&target=" + destinationLang;
+
+            string response = Utils.GetHttpResponse(baseUrl);
+            TranslationResult res = new TranslationResult();
+            res.Sentences = new List<string>() { response };
             return res;
         }
 
