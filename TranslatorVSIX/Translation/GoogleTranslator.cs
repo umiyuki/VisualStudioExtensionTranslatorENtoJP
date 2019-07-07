@@ -6,84 +6,84 @@ using Newtonsoft.Json.Linq;
 
 namespace VSTranslator.Translation
 {
-	public class GoogleTranslator : BaseTranslator
-	{
-		public GoogleTranslator()
-		{
+    public class GoogleTranslator : BaseTranslator
+    {
+        public GoogleTranslator()
+        {
             TargetLanguages = new List<TranslationLanguage>
-			{
-				new TranslationLanguage ("af", "Afrikaans"),
-				new TranslationLanguage ("sq", "Albanian"),
-				new TranslationLanguage ("ar", "Arabic"),
-				new TranslationLanguage ("be", "Belarusian"),
-				new TranslationLanguage ("bg", "Bulgarian"),
-				new TranslationLanguage ("ca", "Catalan"),
-				new TranslationLanguage ("zh-CN", "Chinese (Simplified)"),           
-				new TranslationLanguage ("zh-TW", "Chinese (Traditional)"),           
-				new TranslationLanguage ("hr", "Croatian"),
-				new TranslationLanguage ("cs", "Czech"),
-				new TranslationLanguage ("da", "Danish"),
-				new TranslationLanguage ("nl", "Dutch"),
-				new TranslationLanguage ("en", "English"),
-				new TranslationLanguage ("et", "Estonian"),
-				new TranslationLanguage ("tl", "Filipino"),
-				new TranslationLanguage ("fi", "Finnish"),
-				new TranslationLanguage ("fr", "French"),
-				new TranslationLanguage ("gl", "Galician"),
-				new TranslationLanguage ("de", "German"),
-				new TranslationLanguage ("el", "Greek"),
-				new TranslationLanguage ("iw", "Hebrew"),
-				new TranslationLanguage ("hi", "Hindi"),
-				new TranslationLanguage ("hu", "Hungarian"),
-				new TranslationLanguage ("is", "Icelandic"),
-				new TranslationLanguage ("id", "Indonesian"),
-				new TranslationLanguage ("ga", "Irish"),
-				new TranslationLanguage ("it", "Italian"),
-				new TranslationLanguage ("ja", "Japanese"),
-				new TranslationLanguage ("ko", "Korean"),
-				new TranslationLanguage ("lv", "Latvian"),
-				new TranslationLanguage ("lt", "Lithuanian"),
-				new TranslationLanguage ("mk", "Macedonian"),
-				new TranslationLanguage ("ms", "Malay"),
-				new TranslationLanguage ("mt", "Maltese"),
-				new TranslationLanguage ("fa", "Persian"),
-				new TranslationLanguage ("pl", "Polish"),
-				new TranslationLanguage ("pt", "Portugese"),
-				new TranslationLanguage ("ro", "Romanian"),
-				new TranslationLanguage ("ru", "Russian"),
-				new TranslationLanguage ("sr", "Serbian"),
-				new TranslationLanguage ("sk", "Slovak"),
-				new TranslationLanguage ("sl", "Slovenian"),
-				new TranslationLanguage ("es", "Spanish"),
-				new TranslationLanguage ("sw", "Swahili"),
-				new TranslationLanguage ("sv", "Swedish"),
-				new TranslationLanguage ("th", "Thai"),
-				new TranslationLanguage ("tr", "Turkish"),
-				new TranslationLanguage ("uk", "Ukranian"),
-				new TranslationLanguage ("vi", "Vietnamese"),
-				new TranslationLanguage ("cy", "Welsh"),
-				new TranslationLanguage ("yi", "Yiddish")
-			};
+            {
+                new TranslationLanguage ("af", "Afrikaans"),
+                new TranslationLanguage ("sq", "Albanian"),
+                new TranslationLanguage ("ar", "Arabic"),
+                new TranslationLanguage ("be", "Belarusian"),
+                new TranslationLanguage ("bg", "Bulgarian"),
+                new TranslationLanguage ("ca", "Catalan"),
+                new TranslationLanguage ("zh-CN", "Chinese (Simplified)"),
+                new TranslationLanguage ("zh-TW", "Chinese (Traditional)"),
+                new TranslationLanguage ("hr", "Croatian"),
+                new TranslationLanguage ("cs", "Czech"),
+                new TranslationLanguage ("da", "Danish"),
+                new TranslationLanguage ("nl", "Dutch"),
+                new TranslationLanguage ("en", "English"),
+                new TranslationLanguage ("et", "Estonian"),
+                new TranslationLanguage ("tl", "Filipino"),
+                new TranslationLanguage ("fi", "Finnish"),
+                new TranslationLanguage ("fr", "French"),
+                new TranslationLanguage ("gl", "Galician"),
+                new TranslationLanguage ("de", "German"),
+                new TranslationLanguage ("el", "Greek"),
+                new TranslationLanguage ("iw", "Hebrew"),
+                new TranslationLanguage ("hi", "Hindi"),
+                new TranslationLanguage ("hu", "Hungarian"),
+                new TranslationLanguage ("is", "Icelandic"),
+                new TranslationLanguage ("id", "Indonesian"),
+                new TranslationLanguage ("ga", "Irish"),
+                new TranslationLanguage ("it", "Italian"),
+                new TranslationLanguage ("ja", "Japanese"),
+                new TranslationLanguage ("ko", "Korean"),
+                new TranslationLanguage ("lv", "Latvian"),
+                new TranslationLanguage ("lt", "Lithuanian"),
+                new TranslationLanguage ("mk", "Macedonian"),
+                new TranslationLanguage ("ms", "Malay"),
+                new TranslationLanguage ("mt", "Maltese"),
+                new TranslationLanguage ("fa", "Persian"),
+                new TranslationLanguage ("pl", "Polish"),
+                new TranslationLanguage ("pt", "Portugese"),
+                new TranslationLanguage ("ro", "Romanian"),
+                new TranslationLanguage ("ru", "Russian"),
+                new TranslationLanguage ("sr", "Serbian"),
+                new TranslationLanguage ("sk", "Slovak"),
+                new TranslationLanguage ("sl", "Slovenian"),
+                new TranslationLanguage ("es", "Spanish"),
+                new TranslationLanguage ("sw", "Swahili"),
+                new TranslationLanguage ("sv", "Swedish"),
+                new TranslationLanguage ("th", "Thai"),
+                new TranslationLanguage ("tr", "Turkish"),
+                new TranslationLanguage ("uk", "Ukranian"),
+                new TranslationLanguage ("vi", "Vietnamese"),
+                new TranslationLanguage ("cy", "Welsh"),
+                new TranslationLanguage ("yi", "Yiddish")
+            };
 
             SourceLanguages = new List<TranslationLanguage> { new TranslationLanguage("", "Auto-detect") };
-			SourceLanguages.AddRange(TargetLanguages);
-		}	
+            SourceLanguages.AddRange(TargetLanguages);
+        }
 
-		public override string Name
-		{
-			get { return "Google"; }
-		}
+        public override string Name
+        {
+            get { return "Google"; }
+        }
 
-		public override string AccessibleName
-		{
-			get { return "Google Translate"; }
-		}
-        	
+        public override string AccessibleName
+        {
+            get { return "Google Translate"; }
+        }
 
-		public override TranslationResult GetTranslation(string text, string sourceLang, string destinationLang)
-		{
-			string baseUrl = "https://translate.googleapis.com/translate_a/single";			
-			/* {
+
+        public override TranslationResult GetTranslation(string text, string sourceLang, string destinationLang)
+        {
+            string baseUrl = "https://translation.googleapis.com/language/translate/v2";
+            /* {
 					"sentences":[{"trans":"текст","orig":"text","translit":"tekst","src_translit":""}],
 					"dict":
 					[
@@ -94,25 +94,47 @@ namespace VSTranslator.Translation
 					"server_time":12
 				}
 			* */
-						
-			string data = Utils.CreateQuerystring(new Dictionary<string, string>()
+
+            baseUrl += "?key=" + "AIzaSyBTTPDIKiZV - vcyeWvGH2oTYvuLJvhzNmc";
+
+
+            string data = Utils.CreateQuerystring(new Dictionary<string, string>()
             {
-                {"client","gtx"},
+                //{"client","gtx"},
                 //{"otf", "1"},
 				//{"pc", "0"},
-				{"sl", sourceLang},
-				{"tl", destinationLang},
+				{"source", sourceLang},
+                {"target", destinationLang},
 				//{"hl", destinationLang},
 				{"q", text},
-                {"dt", "t" },
+                //{"dt", "t" },
             });
-			
-			string response = Utils.GetHttpResponse(baseUrl, data);	
-			var json = JArray.Parse(response);
-			TranslationResult res = ParseResponse(json);
-			res.DestinationLanguage = destinationLang;
-			return res;
-		}
+
+            string response = Utils.GetHttpResponse(baseUrl, data);
+            //var json = JArray.Parse(response);
+            //TranslationResult res = ParseResponse(json);
+            //res.DestinationLanguage = destinationLang;
+            Response resp = Newtonsoft.Json.JsonConvert.DeserializeObject<Response>(response);
+            TranslationResult res = new TranslationResult();
+            res.Sentences = new List<string>() { resp.data.translations[0].translatedText };
+            return res;
+        }
+
+        public class Response
+            {
+            public Data data;
+            }
+
+        public class Data
+        {
+            public Translations[] translations;
+        }
+
+        public class Translations
+        {
+            public string translatedText;
+            public string detectedSourceLanguage;
+        }
 
         private TranslationResult ParseResponse(JArray json)
         {
