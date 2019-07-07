@@ -79,8 +79,12 @@ namespace VSTranslator.Translation
             get { return "Google Translate"; }
         }
 
-
         public override TranslationResult GetTranslation(string text, string sourceLang, string destinationLang)
+        {
+            return GetTranslation(text, sourceLang, destinationLang, "");
+        }
+
+        public TranslationResult GetTranslation(string text, string sourceLang, string destinationLang, string apikey)
         {
             string baseUrl = "https://translation.googleapis.com/language/translate/v2";
             /* {
@@ -95,8 +99,8 @@ namespace VSTranslator.Translation
 				}
 			* */
 
-            baseUrl += "?key=" + "AIzaSyBTTPDIKiZV - vcyeWvGH2oTYvuLJvhzNmc";
-
+            //baseUrl += "?key=" + "AIzaSyBTTPDIKiZV - vcyeWvGH2oTYvuLJvhzNmc";
+            baseUrl += "?key=" + apikey;
 
             string data = Utils.CreateQuerystring(new Dictionary<string, string>()
             {

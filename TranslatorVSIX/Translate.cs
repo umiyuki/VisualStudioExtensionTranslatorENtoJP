@@ -179,8 +179,32 @@ namespace TranslatorVSIX
                     text = System.Text.RegularExpressions.Regex.Replace(text, @"\s+", " ");//連続するスペースを一つに減らす
                     text = System.Text.RegularExpressions.Regex.Replace(text, @"\n\z", "");//末尾の改行削除
 
+                    //ダイアログから設定読み込み
+                    IVsShell shell = this.ServiceProvider.GetService(typeof(SVsShell)) as IVsShell;
+                    if (shell == null) return;
+                    IVsPackage package = null;
+                    Guid PackageToBeLoadedGuid =
+                        new Guid(VSPackage1.PackageGuidString);
+                    shell.LoadPackage(ref PackageToBeLoadedGuid, out package);
+                    VSPackage1 vsPackage = (VSPackage1)package;
+                    string apikey = vsPackage.ApiKey;
+                    string sourceLange = vsPackage.SourceLang;
+                    string destinationLang = vsPackage.DestinationLang;
+
+                    if (string.IsNullOrEmpty(apikey))
+                    {
+                        VsShellUtilities.ShowMessageBox(
+                        this.ServiceProvider,
+                        "設定画面(ツール→オプション→TranslatorENtoJP→General)からGoogle Cloud Translation APIのAPIキーを入力してください",
+                        "apiキーが未設定です",
+                        OLEMSGICON.OLEMSGICON_INFO,
+                        OLEMSGBUTTON.OLEMSGBUTTON_OK,
+                        OLEMSGDEFBUTTON.OLEMSGDEFBUTTON_FIRST);
+                        return;
+                    }
+
                     GoogleTranslator translator = new GoogleTranslator();
-                    var result = translator.GetTranslation(text, "en", "ja");
+                    var result = translator.GetTranslation(text, sourceLange, destinationLang, apikey);
 
                     //120バイトごとに改行
                     var strs = SubstringAtCount(result.Sentences[0], 120);
@@ -191,7 +215,9 @@ namespace TranslatorVSIX
                         finalstr += "\n// " + strs[i];
                     }
 
-                    selection.Text += finalstr;
+                    selection.Insert(selection.Text + finalstr);
+                    selection.SmartFormat();
+                    //selection.Text += finalstr;
 
                     /*
                     BingConnector conn = new BingConnector();
